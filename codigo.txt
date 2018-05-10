@@ -1,0 +1,94 @@
+﻿<?php header( Cache-Control:no-store  no-cache  must-revalidate  ) ?>
+<html >
+<head >
+<title > SearchPC/results
+<link rel =  stylesheet  type =  text/css  href =  estilos.css >
+<script language =  JavaScript  type =  text/javascript  src =  script.js >
+
+<body >
+<?php
+$nombreImpresora = $_GET[nombreImpresora] 
+$nombreRed = $_GET[nombreRed] 
+$serial = $_GET[serial] 
+$AF = $_GET[AF] 
+$host = $_GET[Host] 
+$id = $_GET[id] 
+$a =  0 
+mysql_connect( localhost  root ) 
+mysql_select_db( InventoryHWSW ) 
+if($id  !=)
+
+else if( $nombreImpresora != )
+$rs = mysql_query( selectIDImpreNombreImpresora =  $nombreImpresora ) 
+$row = mysql_fetch_array ( $rs ) 
+$id = $row[ IDImpresora ]  if( $id == ) $a = 1 
+
+else if( $nombreRed !=  )
+$rs = mysql_query( select IDImpresora = $nombreRed ) 
+$row = mysql_fetch_array( $rs ) 
+$id = $row[IDImpresora]  if( $id == )  $a =  1 
+
+else if( $serial !=  )
+$rs = mysql_query(  selectIDImpresorafroSerie =  serial ) 
+$row = mysql_fetch_array( $rs ) 
+$id = $row[  IDImpresora  ]  if( $id ==  )  $a = 1 
+
+else if( $AF !=  )
+$rs = mysql_query( selectIDImpresora =  $AF  ) 
+$row = mysql_fetch_array( $rs ) 
+$id = $row[IDImpresora]  if( $id == )  $a = 1 
+
+else if( $host != )
+$rs = mysql_query(  selectIDImpresoraCHost =  $host  ) 
+$row = mysql_fetch_array( $rs ) 
+$id = $row[IDImpresora]  if(  $id  ==  )  $a = 1 
+
+else
+ECHO <h4 > <b > No <br >   $a = 1 
+
+?>
+<table border = 0 width =  95% >
+<tr >
+<td width = 200 valign =  top align =  rigth  >
+<h3 > PrinterOptions
+<div id =  botones2 >
+<a id =  boton3_1  <?php if( $a == 0 ) 
+echo  onclick =  MostrarPagina3 ( Impresoras/consultar_impresora2.php?id = $id  1 )  ?> > GeneralInformation  <br > <br >
+<a id =  boton3_2  <?php if( $a == 0 )  echo onclick = MostrarPagina3  ( Impresoras/consultar_PC-users.php?id = $id  2 ) 
+?> > PC-Users  <br > <br >
+<a id =  boton3_3 <?php if( $a == 0 ) echo onclick = MostrarPagina3  ( Impresoras/consultar_Area.php?id = $id  3  ) 
+?>>  Area  <br >  <br >
+
+
+
+<td >
+<div id =  resultadosImpresoras >
+<?php include( consultar_impresora2.php ) ?>
+
+
+function MostrarPagina3( pagina boton ) 
+cont = document.getElementById(  resultadosImpresoras  ) 
+ajax =  objetoAjax() 
+ajax.open(  GET   pagina  ) 
+ajax.onreadystatechange = function()
+if (  ajax.readyState == 4 && ajax.status == 200  ) 
+cont.innerHTML = ajax.responseText 
+
+
+ajax.send( null ) 
+titulo = new Array() 
+titulo[0] =  General  
+titulo[1] = PC-Users 
+titulo[2] =  Area 
+nrobtn = 3 
+pref =  boton3  
+for( i = 1 i <= nrobtn i ++ )
+tit = titulo[i-1] 
+btn = document.getElementById( pref + i ) 
+btn.innerHTML = <span style = width:200px  border-top:0px #FF9 left:1px  padding-right:5px 
+  text-decoration:none  background-color:#F5F5F5 >
+
+btnA = document.getElementById( prefboton ) 
+tit = titulo[boton-1] 
+btnA.innerHTML = <span style = width:200px  padding-right:5px  padding-top:7px  padding-bottom:7px  text-decoration:none 
+background-color:#DCDCDC >
